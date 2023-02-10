@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
-const
+const db = require("./db");
 
 
 const connection = mysql.createConnection({
@@ -55,7 +55,7 @@ function runPrompts() {
             updateEmployee();
             break;
   
-          case "End":
+          case "Exit":
             connection.end();
             break;
         }
@@ -160,7 +160,7 @@ function addDepartment() {
 // }
 
 // Add a role
-function createRole() {
+function addRole() {
   db.allDepartments()
       .then(([rows]) => {
           let departments = rows;
@@ -171,17 +171,19 @@ function createRole() {
 
           prompt([
               {
-                  name: "title",
-                  message: "What is the name of the role?"
+                  name: "name",
+                  type: "input",
+                  message: "Enter the role name: "
               },
               {
                   name: "salary",
-                  message: "What is the salary rate?"
+                  type: "number",
+                  message: "Enter the salary: "
               },
               {
                   type: "list",
                   name: "department_id",
-                  message: "Which department does the role fall in under?",
+                  message: "Select the department:",
                   choices: departmentChoices
               }
           ])
@@ -195,11 +197,12 @@ function createRole() {
 
 
 // Add a department
-function createDepartment() {
+function addDepartment() {
   prompt([
       {
           name: "name",
-          message: "What is the name of the department?"
+          type: "input",
+          message: "Enter the employee first name: ",
       }
   ])
       .then(res => {
@@ -211,15 +214,17 @@ function createDepartment() {
 }
 
 // Add an employee
-function createEmployee() {
+function addEmployee() {
   prompt([
       {
           name: "first_name",
-          message: "What's the employee's first name?"
+          type: "input",
+            message: "Enter the employee first name: "
       },
       {
           name: "last_name",
-          message: "What's the employee's last name?"
+          type: "input",
+          message: "Enter the employee last name: "
       }
   ])
       .then(res => {
@@ -237,7 +242,7 @@ function createEmployee() {
                   prompt({
                       type: "list",
                       name: "roleId",
-                      message: "What's the employee's role?",
+                      message: "Select the role: ",
                       choices: roleChoices
                   })
                       .then(res => {
@@ -282,7 +287,7 @@ function createEmployee() {
 
 
 // Update employee's role
-function updateEmployeeRole() {
+function updateEmployee() {
   db.allEmployees()
       .then(([rows]) => {
           let employees = rows;
@@ -324,7 +329,4 @@ function updateEmployeeRole() {
               });
       })
 }
-// Quit the application
-function quit() {
-  process.exit();
-}
+
