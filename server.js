@@ -62,136 +62,53 @@ function runPrompts() {
       });
   }
 
-// View all employees
-function viewEmployees() {
-    db.allEmployees()
-        .then(([rows]) => {
-            let employees = rows;
-            console.log("\n");
-            console.table(employees);
-        })
-        .then(() => runPrompts());
+  function viewDepartments() {
+    connection.query('SELECT * FROM department', (error, result) => {
+        if (error) throw error;
+  
+        console.log('\n');
+        console.table(result);
+  
+        runPrompts();
+    })
+  }
+
+  function viewRole() {
+    connection.query('SELECT * FROM role', (error, result) => {
+        if (error) throw error;
+  
+        console.log('\n');
+        console.table(result);
+  
+        runPrompts();
+    })
+  }
+  
+  function viewEmployees() {
+    connection.query('SELECT * FROM employee', (error, result) => {
+        if (error) throw error;
+
+        console.log('\n');
+        console.table(result);
+
+        runPrompts();
+    })
 }
 
-// View all roles
-function viewRole() {
-    db.allRoles()
-        .then(([rows]) => {
-            let roles = rows;
-            console.log("\n");
-            console.table(roles);
-        })
-        .then(() => runPrompts());
+function addDepartment() {
+  inquirer.prompt([{
+          name: 'name',
+          type: 'input',
+          message: 'Enter the department name: '
+      }])
+      .then(response => {
+          connection.query('INSERT INTO department(name) VALUES (?)', [response.name], (error, result) => {
+              if (error) throw error;
+          })
+
+          viewDepartments();
+      })
 }
-
-// View all deparments
-function viewDepartments() {
-    db.allDepartments()
-        .then(([rows]) => {
-            let departments = rows;
-            console.log("\n");
-            console.table(departments);
-        })
-        .then(() => runPrompts());
-}
-
-
-//   function viewDepartments() {
-//     connection.query('SELECT * FROM department', (error, result) => {
-//         if (error) throw error;
-  
-//         console.log('\n');
-//         console.table(result);
-  
-//         runPrompts();
-//     })
-//   }
-
-//   function viewRole() {
-//     connection.query('SELECT * FROM role', (error, result) => {
-//         if (error) throw error;
-  
-//         console.log('\n');
-//         console.table(result);
-  
-//         runPrompts();
-//     })
-//   }
-  
-//   function viewEmployees() {
-//     connection.query('SELECT * FROM employee', (error, result) => {
-//         if (error) throw error;
-
-//         console.log('\n');
-//         console.table(result);
-
-//         runPrompts();
-//     })
-// }
-
-// function addDepartment() {
-//   inquirer.prompt([{
-//           name: 'name',
-//           type: 'input',
-//           message: 'Enter the department name: '
-//       }])
-//       .then(response => {
-//           connection.query('INSERT INTO department(name) VALUES (?)', [response.name], (error, result) => {
-//               if (error) throw error;
-//           })
-
-//           viewDepartments();
-//       })
-// }
-  ////////////////////////////////////////////////////////////////////////
-// function addRole() {
-//   inquirer.prompt([{
-//               name: 'name',
-//               type: 'input',
-//               message: 'Enter the role name: '
-//           },
-//           {
-//               name: 'salary',
-//               type: 'number',
-//               message: 'Enter the salary: ',
-//               validate: salary => {
-//                   if (salary) {
-//                       return true;
-//                   } else {
-//                       console.log('Please enter a number!');
-//                       return false;
-//                   }
-//               }
-//           },
-//           {
-//               name: 'department',
-//               type: 'list',
-//               message: 'Select the department:',
-//               choices: getDepartments()
-//           }
-//       ])
-//       .then(response => {
-//           var responseID = 0;
-
-//           connection.query('SELECT id FROM department WHERE name = ?', [response.department], (error, result) => {
-
-//               if (error) throw error;
-//               result.forEach(id => {
-//                   responseID = id.id;
-//               })
-
-//               connection.query('INSERT INTO role SET ?', {
-//                   title: response.name,
-//                   salary: response.salary,
-//                   department_id: responseID
-//               }, (error, result) => {
-//                   if (error) throw error;
-//               })
-
-//               viewRoles();
-//           })
-//       })
-// }
 
 // Add a role
 function addRole() {
