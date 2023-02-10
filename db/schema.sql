@@ -2,18 +2,10 @@
 DROP DATABASE IF EXISTS employees;
 CREATE DATABASE employees;
 
--- use eomployees database --
+-- use employees database --
 USE employees;
 
--- Creates the table "company within eomployee --
-CREATE TABLE company (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    dept_name VARCHAR(30) NOT NULL
-DROP DATABASE IF EXISTS employees;
-CREATE DATABASE employees;
-
-USE employees;
-
+-- Creates the table "company within employee --
 CREATE TABLE department (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) UNIQUE NOT NULL
