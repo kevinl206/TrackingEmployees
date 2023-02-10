@@ -1,8 +1,8 @@
-# TrackingEmployees [
+# TrackingEmployees 
 
 ### Deployed Application (Heroku) : 
 
-### Github : 
+### Github : https://github.com/kevinl206/TrackingEmployees.git
 
 ## Table of Contents
 - [Description](#description)
