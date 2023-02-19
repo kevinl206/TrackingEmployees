@@ -1,30 +1,37 @@
 -- Drops the employees if it exists currently --
-DROP DATABASE IF EXISTS employees;
-CREATE DATABASE employees;
+DROP DATABASE IF EXISTS employeesDB;
+CREATE DATABASE employeesDB;
 
 -- use employees database --
-USE employees;
+USE employeesDB;
 
--- Creates the table "company within employee --
 CREATE TABLE department (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) UNIQUE NOT NULL
-);
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50)
+    );
 
 CREATE TABLE role (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(50) UNIQUE NOT NULL,
-    salary DECIMAL UNSIGNED NOT NULL,
-    department_id INT UNSIGNED NOT NULL,
-    INDEX dep_ind (department_id),
-    CONSTRAINT fk_department FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE CASCADE
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(50) NOT NULL, 
+    salary DECIMAL NOT NULL,
+    department_id INT,
+    FOREIGN KEY (department_id) 
+    REFERENCES department (id)
+    ON DELETE SET NULL
 );
 
 CREATE TABLE employee (
-    id INTEGER AUTO_INCREMENT,
-    first_name VARCHAR(30),
-    last_name VARCHAR(30),
-    role_id INTEGER(10),
-    manager_id INTEGER(10),
-    PRIMARY KEY (id)
-);
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+first_name VARCHAR(30),
+last_name VARCHAR(30),
+role_id INT,
+
+manager_id INT,
+
+FOREIGN KEY (role_id) 
+REFERENCES role (id)
+ON DELETE SET NULL,
+INDEX role_ind (role_id),
+FOREIGN KEY (manager_id) 
+REFERENCES employee(id)
+ON DELETE SET NULL);

@@ -1,14 +1,16 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const inquirer = require('inquirer');
-const db = require("./db");
+// const db = require("./db");
 
 
-const connection = mysql.createConnection({
+const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'AhooYeah!',
-    database: 'TrackingEmployees'
-});
+    password: 'Ahooyeah1!',
+    database: 'employeesDB'
+},
+console.log(`Connected to the employeesDB database.`)
+);
 
 init();
 
@@ -28,15 +30,15 @@ function runPrompts() {
         switch (task) {
   
           case "View Employees by Department":
-            viewDepartments();
+            viewAllDepartments();
             break;
 
           case "View all Roles":
-            viewRole();
+            viewAllRoles();
             break;
         
           case "View Employees":
-            viewEmployees();
+            viewAllEmployees();
             break;    
 
           case 'Add a department':
@@ -61,38 +63,85 @@ function runPrompts() {
         }
       });
   }
+  function viewAllDepartments() {
+    db.allDepartments()
+        .then(([rows]) => {
+            let departments = rows;
+            console.log("\n");
+            console.table(departments);
+        })
+        .then(() => runPrompts());
+}
+  
+// function viewDepartments() {
+//     db.findAllDepartments()
+//       .then(([rows]) => {
+//         let departments = rows;
+//         console.log("\n");
+//         console.table(departments);
+//       })
+//       .then(() => loadMainPrompts());
+//   };
 
-  function viewDepartments() {
-    connection.query('SELECT * FROM department', (error, result) => {
-        if (error) throw error;
-  
-        console.log('\n');
-        console.table(result);
-  
-        runPrompts();
-    })
-  }
+//  function  findAllDepartments() {
+//     return this.connection.promise().query(
+//       "SELECT department.id, department.name FROM department;"
+//     );
+//   }
+// function viewDepartments() {
+//     connection.query('SELECT * FROM department', (error, result) => {
+//         if (error) throw error;
 
-  function viewRole() {
-    connection.query('SELECT * FROM role', (error, result) => {
-        if (error) throw error;
-  
-        console.log('\n');
-        console.table(result);
-  
-        runPrompts();
-    })
-  }
-  
-  function viewEmployees() {
-    connection.query('SELECT * FROM employee', (error, result) => {
-        if (error) throw error;
+//         console.log('\nDepartments');
+//         console.table(result);
 
-        console.log('\n');
-        console.table(result);
+//         runPrompts();
+//     })
+// }
 
-        runPrompts();
-    })
+
+//   function viewRole() {
+//     connection.query('SELECT * FROM role', (error, result) => {
+//         if (error) throw error;
+  
+//         console.log('\n');
+//         console.table(result);
+  
+//         runPrompts();
+//     })
+//   }
+  
+//   function viewEmployees() {
+//     connection.query('SELECT * FROM employee', (error, result) => {
+//         if (error) throw error;
+
+//         console.log('\n');
+//         console.table(result);
+
+//         runPrompts();
+//     })
+// }
+
+// View all employees
+function viewAllEmployees() {
+    db.allEmployees()
+        .then(([rows]) => {
+            let employees = rows;
+            console.log("\n");
+            console.table(employees);
+        })
+        .then(() => runPrompts());
+}
+
+// View all roles
+function viewAllRoles() {
+    db.allRoles()
+        .then(([rows]) => {
+            let roles = rows;
+            console.log("\n");
+            console.table(roles);
+        })
+        .then(() => runPrompts());
 }
 
 function addDepartment() {
