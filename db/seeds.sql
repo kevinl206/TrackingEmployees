@@ -26,7 +26,7 @@ VALUES
 ('Kevin', 'Love', 1, NULL),
 ('Kobe', 'Bryant', 2, 1),
 ('Michael', 'Jordan', 3, NULL),
-('Stephen', 'Curry', 6, 5),
-('Lebron', 'James', 7, 8),
-('Allen', 'Iverson', 7, NULL);
+('Stephen', 'Curry', 4, 3),
+('Lebron', 'James', 5, 4),
+('Allen', 'Iverson', 6, 5);
 
