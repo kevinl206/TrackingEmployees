@@ -1,4 +1,14 @@
-const connection = require("./connection");
+const mysql = require("mysql2");
+// const connection = require("./connection");
+
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'Ahooyeah1!',
+    database: 'employeesDB'
+},
+console.log(`Connected to the employeesDB database.`)
+);
 
 class employeeDB {
 
@@ -60,5 +70,5 @@ class employeeDB {
     }
 
 }
-
+module.exports = connection;
 module.exports = new employeeDB(connection);

@@ -1,6 +1,7 @@
 # TrackingEmployees 
 
-### Deployed Application (Heroku) : 
+### Walkthrough Video
+- [Video Guide](https://drive.google.com/file/d/1bWSbwIapqJ4NVODgKEUeOZJMZgPUok4h/view)
 
 ### Github : https://github.com/kevinl206/TrackingEmployees.git
 
@@ -18,14 +19,19 @@
 ## Installation
 - Download and install "NPM install".
 - Then run "node server.js" in your terminal.
-![Image]()
-- You will need to make sure your URL is live "https://localhost:3001"
+- Then run this command in your mysql terminal:
+"source schema.sql;"
+- Next
+"source seeds.sql;"
+- After that
+"exit"
 
 [Back to top](#)
   
 ## Screenshot of Example
-![Image](.)
-![Image]()
+![Image](Assets/sql.png)
+
+![Image](Assets/Screenshot%202023-02-25%20at%2010.36.45%20PM.png)
 
 [Back to top](#)
   

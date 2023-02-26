@@ -1,16 +1,16 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
-// const db = require("./db");
+const db = require("./db");
+const { prompt } = require("inquirer");
 
-
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Ahooyeah1!',
-    database: 'employeesDB'
-},
-console.log(`Connected to the employeesDB database.`)
-);
+// const connection = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: 'Ahooyeah1!',
+//     database: 'employeesDB'
+// },
+// console.log(`Connected to the employeesDB database.`)
+// );
 
 init();
 
@@ -26,18 +26,19 @@ function runPrompts() {
         message: "Please select an option: ",
         choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'Exit']
     }])
-    .then(function ({ task }) {
-        switch (task) {
-  
-          case "View Employees by Department":
+    .then(function ( task ) {
+        console.log(task);
+        switch (task.choice) {
+            
+          case "View all departments":
             viewAllDepartments();
             break;
 
-          case "View all Roles":
+          case "View all roles":
             viewAllRoles();
             break;
         
-          case "View Employees":
+          case "View all employees":
             viewAllEmployees();
             break;    
 
@@ -49,7 +50,7 @@ function runPrompts() {
             addRole();
             break;
 
-          case "Add Employee":
+          case "Add an employee":
             addEmployee();
             break;
   
@@ -72,55 +73,6 @@ function runPrompts() {
         })
         .then(() => runPrompts());
 }
-  
-// function viewDepartments() {
-//     db.findAllDepartments()
-//       .then(([rows]) => {
-//         let departments = rows;
-//         console.log("\n");
-//         console.table(departments);
-//       })
-//       .then(() => loadMainPrompts());
-//   };
-
-//  function  findAllDepartments() {
-//     return this.connection.promise().query(
-//       "SELECT department.id, department.name FROM department;"
-//     );
-//   }
-// function viewDepartments() {
-//     connection.query('SELECT * FROM department', (error, result) => {
-//         if (error) throw error;
-
-//         console.log('\nDepartments');
-//         console.table(result);
-
-//         runPrompts();
-//     })
-// }
-
-
-//   function viewRole() {
-//     connection.query('SELECT * FROM role', (error, result) => {
-//         if (error) throw error;
-  
-//         console.log('\n');
-//         console.table(result);
-  
-//         runPrompts();
-//     })
-//   }
-  
-//   function viewEmployees() {
-//     connection.query('SELECT * FROM employee', (error, result) => {
-//         if (error) throw error;
-
-//         console.log('\n');
-//         console.table(result);
-
-//         runPrompts();
-//     })
-// }
 
 // View all employees
 function viewAllEmployees() {
@@ -169,31 +121,31 @@ function addRole() {
               value: id
           }));
 
+
           prompt([
-              {
-                  name: "name",
-                  type: "input",
-                  message: "Enter the role name: "
-              },
-              {
-                  name: "salary",
-                  type: "number",
-                  message: "Enter the salary: "
-              },
-              {
-                  type: "list",
-                  name: "department_id",
-                  message: "Select the department:",
-                  choices: departmentChoices
-              }
-          ])
-              .then(role => {
-                  db.addRole(role)
-                      .then(() => console.log(`Added ${role.title} to the database`))
-                      .then(() => runPrompts())
-              })
-      })
+            {
+                name: "title",
+                message: "What is the name of the role?"
+            },
+            {
+                name: "salary",
+                message: "What is the salary rate?"
+            },
+            {
+                type: "list",
+                name: "department_id",
+                message: "Which department does the role fall in under?",
+                choices: departmentChoices
+            }
+        ])
+            .then(role => {
+                db.addRole(role)
+                    .then(() => console.log(`Added ${role.title} to the database`))
+                    .then(() => runPrompts())
+            })
+    })
 }
+
 
 
 // Add a department
