@@ -13,7 +13,8 @@
 - [Questions](#questions)
   
 ## Description
-    
+    This application is use for a business owner to track their and manage their everything within the organization. The owner is able to view and manage their department,
+    roles, employees and salary information. This application is using the following data structure of Node.js, Inquirer, and MySQL.
 [Back to top](#)
   
 ## Installation
